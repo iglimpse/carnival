@@ -2,9 +2,10 @@
    <div id="app">
     <div class="content-wrapper" >
       <Header ></Header>
+      <img src="bosch_header.svg" alt="Bosch Logo" style="position: absolute; top: -10px; left: 80px;" height="150" width="135"  />
       <router-view />
     </div>
-    <Footer></Footer>
+<!--    <Footer></Footer>-->
   </div>
 </template>
 
@@ -30,10 +31,10 @@ export default {
   flex-grow: 1;
 }
 body {
-  background-color: #87CEEB; /* Light blue background color */
+  //background-color: #77a6ba; /* Light blue background color */
   margin: 0; /* Remove default body margin */
   padding: 0; /* Remove default body padding */
-  font-family: Arial, sans-serif; /* Specify a font for the entire page */
+  //font-family: Arial, sans-serif; /* Specify a font for the entire page */
 }
 </style>
 

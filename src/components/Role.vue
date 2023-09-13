@@ -2,7 +2,7 @@
 
 
   <div class="role-page" :class="{ 'flash-animation': isFlashing }">
-    <img :src="roleImage" height="100" width="90" />
+    <img :src="roleImage" height="200" width="180" />
   <h3 class="role-text">  {{roleText}}</h3>
     <h2 class="challenge-title">请开始你的挑战!</h2>
    
@@ -70,7 +70,7 @@ export default {
 
 
 .role-text {
-  font-size: 24px;
+  font-size: 32px;
   margin-bottom: 200px;
 }
 

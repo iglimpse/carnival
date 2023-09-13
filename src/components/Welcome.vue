@@ -1,11 +1,16 @@
 <template>
-
   <div class="welcome-page" :class="{ 'flash-animation': isFlashing }">
-   <p class="title">“智现在，至未来”  嘉年华</p>   
-    <button @click="checkIn" class="check-in-button">请刷卡</button>
-   
+    <p class="title">“智现在，至未来” 嘉年华</p>
+    <div
+        tabindex="0"
+        style="outline: none;"
+        @keyup="handleKey"
+        ref="keyListener"
+        @click="startTyping"
+    >
+      <span class="large-text">请刷卡!</span>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -14,26 +19,46 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      isFlashing: false, 
+      isFlashing: false,
+      lastRoute: null,
+      isNavigating: false, // 添加一个状态标志来表示是否正在导航
     };
   },
 
   computed: mapState(['roleIndex']),
-  
+
   methods: {
-    checkIn() {
-      this.isFlashing = true; 
-      this.$store.commit('setRoleIndex', this.roleIndex + 1)
-      
-     // 增加页面跳转之前的延迟时间
-    setTimeout(() => {
-      this.isFlashing = false; // 停止闪烁动画
-      this.$router.push('/role');
-    }, 1000); // 增加到1秒或更长的时间
-    }
-  } 
+    handleKey(event) {
+      if (event.key !== null && !this.isNavigating) {
+        const targetRoute = '/role';
+
+        if (this.$route.path !== targetRoute) {
+          this.isNavigating = true; // 标记为正在导航
+
+          this.isFlashing = true;
+          this.$store.commit('setRoleIndex', this.roleIndex + 1);
+          setTimeout(() => {
+            this.isFlashing = false;
+            this.$router.push(targetRoute);
+            this.isNavigating = false; // 导航完成后取消导航标志
+          }, 1000);
+        }
+      }
+    },
+
+    startTyping() {
+      this.$refs.keyListener.focus();
+    },
+  },
+
+  mounted() {
+    this.startTyping();
+  },
 }
 </script>
+
+
+
 
 <style scoped>
 .welcome-page {
@@ -42,23 +67,17 @@ export default {
 }
 
 .title {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: bold;
+  margin-top: 200px;
   margin-bottom: 300px;
 }
 
-.check-in-button {
-  background-color: #007bff; 
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.large-text {
+  font-size: 30px; /* 设置文字的大点尺寸 */
 }
 
-.check-in-button:hover {
-  background-color: #0258b5; 
-}
+
 .flash-animation {
   animation: flash 1s infinite alternate; 
 }
